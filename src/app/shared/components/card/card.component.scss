@@ -1,0 +1,23 @@
+ion-card {
+  border-radius: 18px;
+  color: #fff;
+  margin: 0;
+}
+
+ion-card.visa {
+  background: linear-gradient(135deg, #0f4c81, #3282b8);
+}
+
+ion-card.mastercard {
+  background: linear-gradient(135deg, #7f1d1d, #dc2626);
+}
+
+ion-card.unknown {
+  background: linear-gradient(135deg, #36454f, #5f6f7a);
+}
+
+.number {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}

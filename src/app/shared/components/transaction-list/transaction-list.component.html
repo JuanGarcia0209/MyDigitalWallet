@@ -1,0 +1,19 @@
+<ng-container *ngIf="transactions.length; else emptyState">
+  <ion-list lines="none" *ngFor="let group of groupedTransactions">
+    <ion-item-divider sticky>
+      <ion-label>{{ group.label | titlecase }}</ion-label>
+    </ion-item-divider>
+
+    <app-transaction-item
+      *ngFor="let tx of group.items"
+      [transaction]="tx"
+      (longPress)="itemLongPress.emit($event)"
+    ></app-transaction-item>
+  </ion-list>
+</ng-container>
+
+<ng-template #emptyState>
+  <ion-card>
+    <ion-card-content>No hay transacciones para el filtro actual.</ion-card-content>
+  </ion-card>
+</ng-template>

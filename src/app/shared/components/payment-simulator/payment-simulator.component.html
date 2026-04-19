@@ -1,0 +1,11 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Simulador de Pago</ion-card-title>
+    <ion-card-subtitle>{{ merchant }}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <h2>${{ amount | number }}</h2>
+    <ion-button expand="block" fill="outline" (click)="regenerate.emit()">Generar otro</ion-button>
+    <ion-button expand="block" color="success" (click)="confirm.emit()">Pagar ahora</ion-button>
+  </ion-card-content>
+</ion-card>

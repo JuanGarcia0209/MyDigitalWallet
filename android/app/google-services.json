@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "789768407785",
+    "project_id": "mydigitalwallet-5b214",
+    "storage_bucket": "mydigitalwallet-5b214.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789768407785:android:76a437e015e0849cdafe78",
+        "android_client_info": {
+          "package_name": "com.company.MyDigitalWallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789768407785-u36g97r1adrgqsng3dot33obre9uda8t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtDy3YkhO8KF2HjzZmind9MwhxYVqZ5KQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789768407785-u36g97r1adrgqsng3dot33obre9uda8t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789768407785:android:1f4b9597547b9550dafe78",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789768407785-u36g97r1adrgqsng3dot33obre9uda8t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtDy3YkhO8KF2HjzZmind9MwhxYVqZ5KQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789768407785-u36g97r1adrgqsng3dot33obre9uda8t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

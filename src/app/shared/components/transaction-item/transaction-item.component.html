@@ -1,0 +1,13 @@
+<ion-item
+  (mousedown)="onPressStart()"
+  (mouseup)="onPressEnd()"
+  (mouseleave)="onPressEnd()"
+  (touchstart)="onPressStart()"
+  (touchend)="onPressEnd()"
+>
+  <ion-label>
+    <h3>{{ transaction.merchant }} <span *ngIf="transaction.emoji">{{ transaction.emoji }}</span></h3>
+    <p>{{ transaction.date | date: 'short' }}</p>
+  </ion-label>
+  <ion-note slot="end" color="primary">${{ transaction.amount | number }}</ion-note>
+</ion-item>

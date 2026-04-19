@@ -1,20 +1,172 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="home-shell">
+  <div class="home-inner">
+    <section class="top-strip">
+      <div class="mini-brand" aria-hidden="true">
+        <span class="dot red"></span>
+        <span class="dot blue"></span>
+      </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <div class="top-actions">
+        <ion-button fill="clear" class="icon-btn" (click)="comingSoon('Notificaciones')">
+          <ion-icon name="notifications-outline"></ion-icon>
+        </ion-button>
+        <button class="avatar" type="button" (click)="openProfileModal()" aria-label="Abrir perfil">
+          {{ userInitials }}
+        </button>
+      </div>
+    </section>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <section class="hero">
+      <h1>Hola {{ userFirstName }}!</h1>
+      <p>Ahorremos tu dinero.</p>
+    </section>
+
+    <section class="hero-card" *ngIf="!loading && !cards.length">
+      <ion-icon name="wallet-outline"></ion-icon>
+      <p>No hay tarjetas disponibles.</p>
+      <ion-button class="primary-cta" shape="round" (click)="goToAddCard()">+ Agregar tarjeta</ion-button>
+    </section>
+
+    <section class="hero-card has-cards" *ngIf="!loading && selectedCard">
+      <app-card [card]="selectedCard"></app-card>
+      <ion-button class="primary-cta" shape="round" (click)="goToAddCard()">+ Agregar otra</ion-button>
+    </section>
+
+    <app-skeleton-loading *ngIf="loading" [rows]="2"></app-skeleton-loading>
+
+    <section class="action-grid">
+      <button class="action-tile" type="button" (click)="openCardSwitcher()">
+        <span class="icon-wrap cyan"><ion-icon name="layers-outline"></ion-icon></span>
+        <span>Cambiar tarjeta</span>
+      </button>
+
+      <button class="action-tile" type="button" (click)="goToPayment()">
+        <span class="icon-wrap lime"><ion-icon name="card-outline"></ion-icon></span>
+        <span>Pagar ahora</span>
+      </button>
+
+      <button class="action-tile" type="button" (click)="goToAddCard()">
+        <span class="icon-wrap navy"><ion-icon name="add-outline"></ion-icon></span>
+        <span>Agregar tarjeta</span>
+      </button>
+    </section>
+
+    <section class="history-card">
+      <div class="history-head">
+        <h2>Historial de tarjeta</h2>
+        <button type="button" (click)="goToPayment()">Ver todo</button>
+      </div>
+      <p>No hay transacciones para esta tarjeta.</p>
+    </section>
+
+    <!-- <ion-button fill="clear" class="bio-toggle" (click)="enableBiometricQuickAccess()">
+      {{ biometricEnabled ? 'Biometria activa' : 'Activar biometria' }}
+    </ion-button> -->
   </div>
+
+  <ion-modal [isOpen]="cardSwitcherOpen" (didDismiss)="closeCardSwitcher()" class="card-switcher-modal">
+    <ng-template>
+      <ion-content class="card-switcher-content">
+        <div class="card-switcher-sheet">
+          <div class="sheet-handle"></div>
+
+          <div class="sheet-head compact">
+            <h2>Cambiar tarjeta</h2>
+            <button type="button" class="close-modal" (click)="closeCardSwitcher()">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </div>
+
+          <p class="sheet-subtitle">Selecciona la tarjeta activa para verla en el Home.</p>
+
+          <ion-list lines="none" class="card-switcher-list">
+            <ion-item
+              button
+              detail="false"
+              *ngFor="let card of cards"
+              (click)="selectCard(card.id || '')"
+              [class.active-card]="selectedCardId === card.id"
+            >
+              <ion-label>
+                <h3>{{ card.holderName }}</h3>
+                <p>{{ card.maskedNumber }} · {{ card.brand | titlecase }}</p>
+              </ion-label>
+              <ion-badge color="success" *ngIf="selectedCardId === card.id">Activa</ion-badge>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [isOpen]="profileModalOpen" (didDismiss)="closeProfileModal()" class="profile-modal">
+    <ng-template>
+      <ion-content class="profile-modal-content">
+        <div class="modal-sheet">
+          <div class="sheet-handle"></div>
+
+          <div class="sheet-head">
+            <h2>Mi perfil</h2>
+            <button type="button" class="close-modal" (click)="closeProfileModal()">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </div>
+
+          <div class="profile-center">
+            <div class="profile-photo">
+              <span>{{ userInitials }}</span>
+              <div class="camera-badge">
+                <ion-icon name="camera"></ion-icon>
+              </div>
+            </div>
+            <h3>{{ profileForm.value.firstName || userFirstName }} {{ profileForm.value.lastName || userLastName }}</h3>
+            <p>Miembro VIP</p>
+          </div>
+
+          <div class="profile-meta">
+            <ion-chip>
+              <ion-icon name="mail-outline"></ion-icon>
+              <ion-label>{{ currentUser?.email || 'Sin email' }}</ion-label>
+            </ion-chip>
+            <ion-chip>
+              <ion-icon name="id-card-outline"></ion-icon>
+              <ion-label>{{ currentUser?.documentType || 'DOC' }} {{ currentUser?.documentNumber || 'Sin numero' }}</ion-label>
+            </ion-chip>
+            <ion-chip>
+              <ion-icon name="location-outline"></ion-icon>
+              <ion-label>{{ currentUser?.country || 'Sin pais' }}</ion-label>
+            </ion-chip>
+            <ion-chip>
+              <ion-icon name="calendar-outline"></ion-icon>
+              <ion-label>Miembro desde {{ memberSinceLabel }}</ion-label>
+            </ion-chip>
+          </div>
+
+          <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="profile-form">
+            <div class="profile-field">
+              <span class="field-icon"><ion-icon name="person-outline"></ion-icon></span>
+              <app-custom-input label="Nombre" [control]="profileForm.controls.firstName"></app-custom-input>
+            </div>
+
+            <div class="profile-field">
+              <span class="field-icon"><ion-icon name="people-outline"></ion-icon></span>
+              <app-custom-input label="Apellido" [control]="profileForm.controls.lastName"></app-custom-input>
+            </div>
+
+            <div class="profile-switch" *ngIf="!isGoogleUser">
+              <span class="field-icon"><ion-icon name="finger-print-outline"></ion-icon></span>
+              <div class="switch-copy">
+                <strong>Biometría</strong>
+                <small>Se solicita huella al activar o desactivar.</small>
+              </div>
+              <ion-toggle slot="end" formControlName="biometricEnabled" (ionChange)="onBiometricToggleChange($event)"></ion-toggle>
+            </div>
+
+            <ion-button type="submit" expand="block" class="save-btn">Guardar cambios</ion-button>
+            <ion-button type="button" expand="block" fill="outline" color="danger" class="logout-btn" (click)="logout()">Cerrar sesión</ion-button>
+          </form>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

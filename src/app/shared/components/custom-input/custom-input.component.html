@@ -1,0 +1,13 @@
+<ion-item>
+  <ion-input
+    [type]="type"
+    [label]="label"
+    labelPlacement="stacked"
+    [placeholder]="placeholder"
+    [formControl]="control"
+    [attr.maxlength]="maxlength ?? null"
+  ></ion-input>
+</ion-item>
+<ion-text color="danger" *ngIf="hasError">
+  <small>{{ label }} es invalido.</small>
+</ion-text>

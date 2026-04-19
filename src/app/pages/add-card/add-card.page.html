@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Agregar tarjeta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form class="form-grid" [formGroup]="form" (ngSubmit)="save()">
+    <app-custom-input label="Titular" [control]="form.controls.holderName"></app-custom-input>
+
+    <ion-item>
+      <ion-input
+        label="Numero"
+        labelPlacement="stacked"
+        placeholder="1234 5678 9012 3456"
+        formControlName="cardNumber"
+        maxlength="19"
+        (ionInput)="onCardInput($event)"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input
+        label="Expiracion"
+        labelPlacement="stacked"
+        placeholder="MM/YY"
+        formControlName="expiry"
+        maxlength="5"
+        (ionInput)="onExpiryInput($event)"
+      ></ion-input>
+    </ion-item>
+
+    <ion-chip color="primary">Franquicia detectada: {{ brand | titlecase }}</ion-chip>
+
+    <ion-button type="submit" expand="block">Guardar tarjeta</ion-button>
+  </form>
+</ion-content>

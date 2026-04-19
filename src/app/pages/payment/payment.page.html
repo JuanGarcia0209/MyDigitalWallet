@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Pagos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-select label="Tarjeta" labelPlacement="stacked" [(ngModel)]="selectedCardId" (ionChange)="loadTransactions()">
+      <ion-select-option *ngFor="let card of cards" [value]="card.id">{{ card.maskedNumber }} - {{ card.brand | titlecase }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-button expand="block" color="primary" (click)="openSimulatorModal()">Abrir simulador de pago</ion-button>
+
+  <ion-modal [isOpen]="showSimulatorModal" (didDismiss)="closeSimulatorModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Simulador de pago</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeSimulatorModal()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <app-payment-simulator
+          [merchant]="merchant"
+          [amount]="amount"
+          (regenerate)="regenerateSimulation()"
+          (confirm)="processPayment()"
+        ></app-payment-simulator>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <app-calendar (dateChange)="onDateFilter($event)"></app-calendar>
+
+  <app-transaction-list
+    [transactions]="transactions"
+    (itemLongPress)="openEmojiPicker($event)"
+  ></app-transaction-list>
+
+  <ion-card *ngIf="showEmojiPicker" class="emoji-panel">
+    <ion-card-header>
+      <ion-card-title>Reaccionar gasto</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <emoji-mart (emojiClick)="onEmojiSelect($event)"></emoji-mart>
+      <ion-button expand="block" fill="clear" (click)="showEmojiPicker = false">Cerrar</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
