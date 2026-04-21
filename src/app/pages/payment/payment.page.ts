@@ -26,13 +26,12 @@ export class PaymentPage implements OnInit {
   amount = 0;
   showSimulatorModal = false;
   biometricRequired = false;
-  notificationDebugMessage = '';
-  notificationDebugToken = '';
 
   reactionTarget?: WalletTransaction;
   showEmojiPicker = false;
   private preferredCardId = '';
   private shouldOpenSimulator = false;
+  private emojiPickerOpenTimeout?: ReturnType<typeof setTimeout>;
 
   get selectedCard(): WalletCard | undefined {
     return this.cards.find((card) => card.id === this.selectedCardId);
@@ -111,8 +110,7 @@ export class PaymentPage implements OnInit {
     }
 
     const isGoogleUser = this.authService.isAuthenticatedWithGoogle();
-    if (!isGoogleUser) {
-      if (this.biometricRequired) {
+    if (isGoogleUser || this.biometricRequired) {
         const available = await this.biometricService.isAvailable();
         if (!available) {
           await this.toastService.show('Biometria activada pero no disponible en este dispositivo');
@@ -124,7 +122,7 @@ export class PaymentPage implements OnInit {
           await this.toastService.show('Pago cancelado por autenticacion biometrica');
           return;
         }
-      } else {
+    } else {
         const password = await this.promptPaymentPassword();
         if (!password) {
           await this.toastService.show('Pago cancelado');
@@ -143,27 +141,16 @@ export class PaymentPage implements OnInit {
           await this.toastService.show(this.authService.getAuthErrorMessage(error));
           return;
         }
-      }
     }
 
     try {
       await this.paymentService.processPayment(this.selectedCardId, this.merchant, this.amount);
       const notificationResult = await this.notificationService.sendPaymentNotification(this.amount);
-      this.notificationDebugMessage = notificationResult.success
-        ? ''
-        : (notificationResult.debugDetails || notificationResult.errorMessage || 'Error desconocido');
-      this.notificationDebugToken = notificationResult.success
-        ? ''
-        : (notificationResult.pushToken || 'No disponible');
       await this.toastService.show(
         notificationResult.success
           ? 'Pago realizado con exito'
           : `Pago realizado con exito, pero no se pudo enviar la notificacion: ${notificationResult.errorMessage || 'Error desconocido'}`,
       );
-      if (notificationResult.success) {
-        this.notificationDebugMessage = '';
-        this.notificationDebugToken = '';
-      }
       this.regenerateSimulation();
       this.showSimulatorModal = false;
     } catch {
@@ -198,33 +185,6 @@ export class PaymentPage implements OnInit {
     return password || null;
   }
 
-  async copyNotificationDebugMessage(): Promise<void> {
-    if (!this.notificationDebugMessage) {
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(this.notificationDebugMessage);
-      await this.toastService.show('Mensaje de error copiado');
-    } catch {
-      await this.toastService.show('No se pudo copiar el mensaje');
-    }
-  }
-
-  async copyNotificationDebugToken(): Promise<void> {
-    if (!this.notificationDebugToken || this.notificationDebugToken === 'No disponible') {
-      await this.toastService.show('No hay token FCM para copiar');
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(this.notificationDebugToken);
-      await this.toastService.show('Token FCM copiado');
-    } catch {
-      await this.toastService.show('No se pudo copiar el token');
-    }
-  }
-
   openSimulatorModal(): void {
     this.showSimulatorModal = true;
   }
@@ -235,10 +195,23 @@ export class PaymentPage implements OnInit {
 
   openEmojiPicker(tx: WalletTransaction): void {
     this.reactionTarget = tx;
-    this.showEmojiPicker = true;
+
+    if (this.emojiPickerOpenTimeout) {
+      clearTimeout(this.emojiPickerOpenTimeout);
+    }
+
+    this.emojiPickerOpenTimeout = setTimeout(() => {
+      this.showEmojiPicker = true;
+      this.emojiPickerOpenTimeout = undefined;
+    }, 100);
   }
 
   closeEmojiPicker(): void {
+    if (this.emojiPickerOpenTimeout) {
+      clearTimeout(this.emojiPickerOpenTimeout);
+      this.emojiPickerOpenTimeout = undefined;
+    }
+
     this.showEmojiPicker = false;
   }
 
