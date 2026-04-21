@@ -18,8 +18,6 @@ export class BiometricService {
     try {
       await NativeBiometric.verifyIdentity({
         reason,
-        title: 'Verificacion biometrica',
-        subtitle: 'MyDigitalWallet',
         description: 'Autoriza la operacion con biometria o PIN del dispositivo',
       });
       return true;
