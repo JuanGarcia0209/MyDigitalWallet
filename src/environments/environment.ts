@@ -17,8 +17,8 @@ export const environment = {
   },
   notificationService: {
     baseUrl: 'https://sendnotificationfirebase-production.up.railway.app',
-    email: '',
-    password: '',
+    email: 'juan.navarrogarcia@unicolombo.edu.co',
+    password: 'Juan0209',
   },
 };
 

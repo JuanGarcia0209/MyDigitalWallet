@@ -1,10 +1,39 @@
-<ion-card [class]="card.brand">
-  <ion-card-header>
-    <ion-card-title>{{ card.brand | titlecase }}</ion-card-title>
-    <ion-card-subtitle>{{ card.holderName }}</ion-card-subtitle>
-  </ion-card-header>
-  <ion-card-content>
-    <p class="number">{{ card.maskedNumber }}</p>
-    <p>Exp: {{ card.expiry }}</p>
-  </ion-card-content>
-</ion-card>
+<article #cardElement class="wallet-card" [ngClass]="card.brand">
+  <div class="wallet-actions" *ngIf="showActions" aria-label="Acciones de tarjeta">
+    <button type="button" class="action-btn edit" (click)="editCard.emit()" aria-label="Editar tarjeta" title="Editar tarjeta">
+      <ion-icon name="create-outline"></ion-icon>
+    </button>
+
+    <button type="button" class="action-btn delete" (click)="deleteCard.emit()" aria-label="Eliminar tarjeta" title="Eliminar tarjeta">
+      <ion-icon name="trash-outline"></ion-icon>
+    </button>
+  </div>
+
+  <div class="wallet-top">
+    <span class="wallet-tag">DEBITO</span>
+    <div class="wallet-brand" [attr.aria-label]="'Franquicia: ' + brandLabel">
+      <ng-container [ngSwitch]="card.brand">
+        <span *ngSwitchCase="'visa'" class="brand-visa">VISA</span>
+        <span *ngSwitchCase="'mastercard'" class="brand-mastercard" aria-hidden="true">
+          <span class="mc-circle left"></span>
+          <span class="mc-circle right"></span>
+        </span>
+        <ion-icon *ngSwitchDefault name="card-outline"></ion-icon>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="wallet-number">{{ card.maskedNumber }}</div>
+
+  <div class="wallet-bottom">
+    <div class="wallet-meta">
+      <small>NOMBRE DEL TITULAR</small>
+      <strong>{{ card.holderName }}</strong>
+    </div>
+
+    <div class="wallet-meta align-right">
+      <small>VENCE</small>
+      <strong>{{ card.expiry }}</strong>
+    </div>
+  </div>
+</article>

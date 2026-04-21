@@ -1,3 +1,50 @@
-.emoji-panel {
+.section-title {
+  margin: 18px 0 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1f2d3d;
+}
+
+.emoji-picker-modal {
+  --width: min(96vw, 560px);
+  --height: min(82vh, 480px);
+  --border-radius: 18px;
+}
+
+.emoji-picker-content {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+.emoji-picker {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.notification-debug-card {
   margin-top: 16px;
+
+  ion-card-subtitle {
+    margin-top: 4px;
+  }
+
+  .notification-debug-text {
+    margin-bottom: 12px;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --background: transparent;
+    --color: #8a1f11;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  .notification-debug-text::part(native) {
+    user-select: text;
+    -webkit-user-select: text;
+  }
 }

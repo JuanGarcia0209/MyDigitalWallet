@@ -1,5 +1,16 @@
-<div class="actions">
-  <ion-button expand="block" fill="outline" (click)="transfer.emit()">Transferir</ion-button>
-  <ion-button expand="block" fill="outline" (click)="recharge.emit()">Recargar</ion-button>
-  <ion-button expand="block" color="success" (click)="pay.emit()">Pagar</ion-button>
+<div class="quick-actions-grid">
+  <button class="action-tile" type="button" (click)="cambiarTarjeta.emit()">
+    <span class="icon-wrap cyan"><ion-icon name="layers-outline"></ion-icon></span>
+    <span>Cambiar tarjeta</span>
+  </button>
+
+  <button class="action-tile" type="button" (click)="realizarPago.emit()">
+    <span class="icon-wrap lime"><ion-icon name="card-outline"></ion-icon></span>
+    <span>Realizar pago</span>
+  </button>
+
+  <button class="action-tile" type="button" (click)="agregarTarjeta.emit()">
+    <span class="icon-wrap navy"><ion-icon name="add-outline"></ion-icon></span>
+    <span>Agregar tarjeta</span>
+  </button>
 </div>

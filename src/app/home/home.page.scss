@@ -1,3 +1,148 @@
 :host {
   display: block;
 }
+
+.switcher-header {
+  margin-bottom: 4px;
+}
+
+.switcher-carousel {
+  position: relative;
+  display: block;
+  margin-top: 50px;
+}
+
+.switcher-deck {
+  position: relative;
+  width: min(100%, 360px);
+  height: 216px;
+  margin: 0 auto;
+  isolation: isolate;
+}
+
+.switcher-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 20px;
+  width: min(92vw, 320px);
+  min-height: 190px;
+  border: 0;
+  border-radius: 20px;
+  padding: 18px 16px 14px;
+  text-align: left;
+  color: #f8fbff;
+  overflow: hidden;
+  box-shadow: 0 14px 28px rgba(10, 15, 22, 0.14);
+  touch-action: pan-y;
+}
+
+.switcher-card.visa {
+  background: linear-gradient(145deg, #294e76 0%, #203a56 100%);
+}
+
+.switcher-card.mastercard {
+  background: linear-gradient(145deg, #623232 0%, #8f2f2f 100%);
+}
+
+.switcher-card.unknown {
+  background: linear-gradient(145deg, #2b3a49 0%, #1f2b38 100%);
+}
+
+.switcher-card.current-card {
+  z-index: 4;
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 16px 30px rgba(8, 14, 22, 0.24);
+}
+
+.switcher-card.ghost-card {
+  z-index: 6;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: none;
+}
+
+.switcher-card.next-card {
+  z-index: 1;
+  opacity: 0.72;
+  transform: translateY(-18px) scale(0.9);
+}
+
+.switcher-card.next-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 12, 18, 0.12);
+  pointer-events: none;
+}
+
+.switcher-card.is-selected {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.switcher-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.switcher-tag {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+
+.switcher-brand {
+  min-width: 44px;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switcher-brand ion-icon {
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+.switcher-card-number {
+  margin-top: 18px;
+  font-size: 1.02rem;
+  letter-spacing: 0.08em;
+  word-spacing: 0.22em;
+  font-weight: 700;
+}
+
+.switcher-card-bottom {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.switcher-card-bottom small {
+  display: block;
+  font-size: 0.6rem;
+  opacity: 0.8;
+  margin-bottom: 2px;
+}
+
+.switcher-card-bottom strong {
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.selected-pill {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 0.58rem;
+}

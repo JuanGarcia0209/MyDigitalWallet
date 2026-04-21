@@ -4,10 +4,23 @@
   (mouseleave)="onPressEnd()"
   (touchstart)="onPressStart()"
   (touchend)="onPressEnd()"
+  (touchcancel)="onPressEnd()"
 >
   <ion-label>
-    <h3>{{ transaction.merchant }} <span *ngIf="transaction.emoji">{{ transaction.emoji }}</span></h3>
+    <h3>{{ transaction.merchant }}</h3>
     <p>{{ transaction.date | date: 'short' }}</p>
   </ion-label>
+  <ion-button
+    slot="end"
+    fill="clear"
+    class="reaction-btn"
+    [attr.aria-label]="transaction.emoji ? 'Cambiar reaccion' : 'Agregar reaccion'"
+    (pointerup)="onReactionTap($event)"
+  >
+    <span *ngIf="transaction.emoji; else emojiIcon" class="reaction-emoji">{{ transaction.emoji }}</span>
+    <ng-template #emojiIcon>
+      <ion-icon name="happy-outline"></ion-icon>
+    </ng-template>
+  </ion-button>
   <ion-note slot="end" color="primary">${{ transaction.amount | number }}</ion-note>
 </ion-item>

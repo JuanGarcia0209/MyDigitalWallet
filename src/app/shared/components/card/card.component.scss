@@ -1,23 +1,148 @@
-ion-card {
-  border-radius: 18px;
+.wallet-card {
+  position: relative;
+  border-radius: 22px;
+  padding: 22px 20px 16px;
+  min-height: 220px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 10px;
+  background: linear-gradient(145deg, #2b3a49 0%, #1f2b38 100%);
+  color: #f7f9fb;
+  box-shadow: 0 16px 34px rgba(15, 20, 26, 0.22);
+}
+
+.wallet-card.visa {
+  background: linear-gradient(145deg, #294e76 0%, #203a56 100%);
+}
+
+.wallet-card.mastercard {
+  background: linear-gradient(145deg, #623232 0%, #8f2f2f 100%);
+}
+
+.wallet-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wallet-tag {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 0.92;
+}
+
+.wallet-brand {
+  min-width: 90px;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wallet-brand ion-icon {
+  font-size: 2.8rem !important;
+  opacity: 0.95;
+}
+
+.brand-visa {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #8ab9ff;
+}
+
+.brand-mastercard {
+  position: relative;
+  width: 66px;
+  height: 38px;
+  display: inline-block;
+}
+
+.mc-circle {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  top: 3px;
+}
+
+.mc-circle.left {
+  left: 7px;
+  background: rgba(247, 75, 75, 0.92);
+}
+
+.mc-circle.right {
+  left: 28px;
+  background: rgba(250, 190, 45, 0.92);
+}
+
+.wallet-number {
+  align-self: center;
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  line-height: 1.15;
+  word-spacing: 0.28em;
+}
+
+.wallet-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.wallet-meta {
+  display: grid;
+  gap: 3px;
+}
+
+.wallet-meta.align-right {
+  justify-items: end;
+}
+
+.wallet-meta small {
+  font-size: 0.67rem;
+  letter-spacing: 0.08em;
+  opacity: 0.88;
+}
+
+.wallet-meta strong {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+.wallet-actions {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  z-index: 2;
+}
+
+.action-btn {
+  border: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #eff3f7;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.action-btn ion-icon {
+  font-size: 1rem;
   color: #fff;
-  margin: 0;
 }
 
-ion-card.visa {
-  background: linear-gradient(135deg, #0f4c81, #3282b8);
-}
-
-ion-card.mastercard {
-  background: linear-gradient(135deg, #7f1d1d, #dc2626);
-}
-
-ion-card.unknown {
-  background: linear-gradient(135deg, #36454f, #5f6f7a);
-}
-
-.number {
-  font-size: 1.15rem;
-  font-weight: 600;
-  letter-spacing: 1px;
+.action-btn.delete {
+  background: rgba(255, 88, 88, 0.5);
 }

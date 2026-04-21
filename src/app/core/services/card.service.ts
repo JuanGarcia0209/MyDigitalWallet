@@ -79,6 +79,27 @@ export class CardService {
     });
   }
 
+  async updateCard(cardId: string, data: { holderName: string; expiry: string }): Promise<void> {
+    const uid = this.authService.getCurrentUid();
+    if (!uid) {
+      throw new Error('No hay sesion activa');
+    }
+
+    await this.firestoreService.update<WalletCard>('cards', cardId, {
+      holderName: data.holderName,
+      expiry: data.expiry,
+    });
+  }
+
+  async deleteCard(cardId: string): Promise<void> {
+    const uid = this.authService.getCurrentUid();
+    if (!uid) {
+      throw new Error('No hay sesion activa');
+    }
+
+    await this.firestoreService.delete('cards', cardId);
+  }
+
   getMyCards(): Observable<WalletCard[]> {
     const uid = this.authService.getCurrentUid();
     if (!uid) {

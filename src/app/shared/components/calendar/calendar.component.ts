@@ -10,9 +10,9 @@ export class CalendarComponent {
   @Output() dateChange = new EventEmitter<string | null>();
   value = '';
 
-  onDateSelect(value: string): void {
-    this.value = value;
-    const normalized = value ? value.slice(0, 10) : null;
+  onDateSelect(value: string | null): void {
+    this.value = value || '';
+    const normalized = this.value ? this.value.slice(0, 10) : null;
     this.dateChange.emit(normalized);
   }
 

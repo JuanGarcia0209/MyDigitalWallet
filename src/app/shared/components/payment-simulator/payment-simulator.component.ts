@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { WalletCard } from 'src/app/core/models/app.models';
 
 @Component({
   selector: 'app-payment-simulator',
@@ -7,6 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   standalone: false,
 })
 export class PaymentSimulatorComponent {
+  @Input() card?: WalletCard;
   @Input() merchant = '';
   @Input() amount = 0;
   @Output() regenerate = new EventEmitter<void>();

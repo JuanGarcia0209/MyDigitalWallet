@@ -11,29 +11,86 @@
 
 <ion-content class="ion-padding">
   <form class="form-grid" [formGroup]="form" (ngSubmit)="save()">
-    <app-custom-input label="Titular" [control]="form.controls.holderName"></app-custom-input>
+    <section class="card-preview-wrap" aria-label="Vista previa de la tarjeta">
+      <article class="card-preview" #previewCard [ngClass]="brand">
+        <div class="preview-top">
+          <span class="preview-tag">DEBITO</span>
+          <div class="preview-brand" [attr.aria-label]="'Franquicia detectada: ' + brand">
+            <ng-container [ngSwitch]="brand">
+              <span *ngSwitchCase="'visa'" class="brand-visa">VISA</span>
+              <span *ngSwitchCase="'mastercard'" class="brand-mastercard" aria-hidden="true">
+                <span class="mc-circle left"></span>
+                <span class="mc-circle right"></span>
+              </span>
+              <ion-icon *ngSwitchDefault class="preview-brand-icon" name="card-outline"></ion-icon>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="preview-number">{{ previewNumber }}</div>
+
+        <div class="preview-bottom">
+          <div class="preview-holder">
+            <small>NOMBRE DEL TITULAR</small>
+            <strong>{{ previewHolderName }}</strong>
+          </div>
+          <div class="preview-expiry">
+            <small>VENCE</small>
+            <strong>{{ previewExpiry }}</strong>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <app-custom-input label="Nombre del titular" [control]="form.controls.holderName"></app-custom-input>
 
     <ion-item>
       <ion-input
-        label="Numero"
+        label="Numero de tarjeta"
         labelPlacement="stacked"
-        placeholder="1234 5678 9012 3456"
+        placeholder="XXXX XXXX XXXX XXXX"
         formControlName="cardNumber"
         maxlength="19"
         (ionInput)="onCardInput($event)"
       ></ion-input>
     </ion-item>
 
-    <ion-item>
-      <ion-input
-        label="Expiracion"
-        labelPlacement="stacked"
-        placeholder="MM/YY"
-        formControlName="expiry"
-        maxlength="5"
-        (ionInput)="onExpiryInput($event)"
-      ></ion-input>
-    </ion-item>
+    <section class="meta-row">
+      <ion-item>
+        <ion-input
+          label="Fecha de vencimiento"
+          labelPlacement="stacked"
+          placeholder="MM/YY"
+          formControlName="expiry"
+          maxlength="5"
+          (ionInput)="onExpiryInput($event)"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input
+          label="CVC"
+          labelPlacement="stacked"
+          placeholder="***"
+          formControlName="cvc"
+          maxlength="4"
+          inputmode="numeric"
+          (ionInput)="onCvcInput($event)"
+        ></ion-input>
+      </ion-item>
+    </section>
+
+    <ion-note color="danger" *ngIf="form.controls.expiry.touched && form.controls.expiry.hasError('expiryFormat')">
+      La fecha de expiracion debe tener formato MM/YY valido.
+    </ion-note>
+
+    <ion-note color="danger" *ngIf="form.controls.expiry.touched && form.controls.expiry.hasError('expiryPast')">
+      La tarjeta ya esta vencida.
+    </ion-note>
+
+    <ion-note color="danger" *ngIf="form.controls.cvc.touched && form.controls.cvc.invalid">
+      El CVC debe tener entre 3 y 4 digitos.
+    </ion-note>
 
     <ion-chip color="primary">Franquicia detectada: {{ brand | titlecase }}</ion-chip>
 

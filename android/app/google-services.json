@@ -7,41 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:789768407785:android:76a437e015e0849cdafe78",
-        "android_client_info": {
-          "package_name": "com.company.MyDigitalWallet"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "789768407785-u36g97r1adrgqsng3dot33obre9uda8t.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDtDy3YkhO8KF2HjzZmind9MwhxYVqZ5KQ"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "789768407785-u36g97r1adrgqsng3dot33obre9uda8t.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:789768407785:android:1f4b9597547b9550dafe78",
         "android_client_info": {
           "package_name": "io.ionic.starter"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "789768407785-9fa9i9n8s1iuelqsl0br2eg5rb3bk7ca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.ionic.starter",
+            "certificate_hash": "8ef66690d24aabc3d0e6f0184f07973848d29e53"
+          }
+        },
         {
           "client_id": "789768407785-u36g97r1adrgqsng3dot33obre9uda8t.apps.googleusercontent.com",
           "client_type": 3

@@ -4,6 +4,9 @@
     <ion-card-subtitle>{{ merchant }}</ion-card-subtitle>
   </ion-card-header>
   <ion-card-content>
+    <div class="simulator-card" *ngIf="card">
+      <app-card [card]="card" [showActions]="false"></app-card>
+    </div>
     <h2>${{ amount | number }}</h2>
     <ion-button expand="block" fill="outline" (click)="regenerate.emit()">Generar otro</ion-button>
     <ion-button expand="block" color="success" (click)="confirm.emit()">Pagar ahora</ion-button>

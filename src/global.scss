@@ -24,6 +24,7 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+@import "@ctrl/ngx-emoji-mart/picker";
 
 /**
  * Ionic Dark Mode
@@ -263,6 +264,17 @@
 .card-switcher-list p {
 	margin: 4px 0 0;
 	color: #718096;
+}
+
+.card-switcher-empty {
+	margin: 10px 0 0;
+	padding: 14px;
+	border-radius: 14px;
+	background: #f8fafc;
+	border: 1px dashed #d6dee8;
+	color: #516074;
+	font-weight: 600;
+	text-align: center;
 }
 
 .profile-modal::part(content) {

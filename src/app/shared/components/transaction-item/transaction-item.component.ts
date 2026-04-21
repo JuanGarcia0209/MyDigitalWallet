@@ -23,4 +23,11 @@ export class TransactionItemComponent {
       this.timer = undefined;
     }
   }
+
+  onReactionTap(event: Event): void {
+    event.stopPropagation();
+    event.preventDefault();
+    this.onPressEnd();
+    this.longPress.emit(this.transaction);
+  }
 }

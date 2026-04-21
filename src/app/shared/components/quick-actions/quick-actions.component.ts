@@ -7,7 +7,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
   standalone: false,
 })
 export class QuickActionsComponent {
-  @Output() transfer = new EventEmitter<void>();
-  @Output() recharge = new EventEmitter<void>();
-  @Output() pay = new EventEmitter<void>();
+  @Output() cambiarTarjeta = new EventEmitter<void>();
+  @Output() realizarPago = new EventEmitter<void>();
+  @Output() agregarTarjeta = new EventEmitter<void>();
 }

@@ -1,17 +1,9 @@
 <ion-item>
-  <ion-label>Filtrar por fecha</ion-label>
-  <ion-datetime-button datetime="tx-date"></ion-datetime-button>
+  <ion-label position="stacked">Filtrar por fecha</ion-label>
+  <ion-input
+    type="date"
+    [value]="value"
+    (ionChange)="onDateSelect($any($event.detail.value))"
+  ></ion-input>
   <ion-button fill="clear" size="small" (click)="clear()">Limpiar</ion-button>
 </ion-item>
-
-<ion-modal [keepContentsMounted]="true">
-  <ng-template>
-    <ion-datetime
-      id="tx-date"
-      [value]="value"
-      presentation="date"
-      locale="es-CO"
-      (ionChange)="onDateSelect($any($event.detail.value))"
-    ></ion-datetime>
-  </ng-template>
-</ion-modal>

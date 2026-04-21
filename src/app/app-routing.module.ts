@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { AutoLoginGuard } from './core/guards/auto-login.guard';
-import { BiometricLockGuard } from './core/guards/biometric-lock.guard';
 
 const routes: Routes = [
   {
@@ -27,7 +26,7 @@ const routes: Routes = [
   },
   {
     path: 'payment',
-    canActivate: [AuthGuard, BiometricLockGuard],
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/payment/payment.module').then((m) => m.PaymentPageModule),
   },
   {
