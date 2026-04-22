@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
 import { ToastService } from 'src/app/core/services/toast.service';
@@ -100,6 +101,7 @@ export class RegisterPage implements OnInit {
         });
         await this.toastService.show('Cuenta creada correctamente');
       }
+      await Haptics.impact({ style: ImpactStyle.Light });
       await this.router.navigateByUrl('/home', { replaceUrl: true });
     } catch (error) {
       await this.toastService.show(this.authService.getAuthErrorMessage(error));

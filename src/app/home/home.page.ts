@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { AppUser, WalletCard, WalletTransaction } from 'src/app/core/models/app.models';
@@ -335,6 +336,7 @@ export class HomePage implements AfterViewInit, OnDestroy {
 
     try {
       await this.cardService.updateCard(this.selectedCard.id, { holderName, expiry });
+      await Haptics.impact({ style: ImpactStyle.Light });
       await this.toastService.show('Tarjeta actualizada');
     } catch {
       await this.toastService.show('No se pudo actualizar la tarjeta');
@@ -705,6 +707,7 @@ export class HomePage implements AfterViewInit, OnDestroy {
       this.biometricEnabled = !!raw.biometricEnabled;
       this.biometricToggleBaseline = !!raw.biometricEnabled;
       this.profileModalOpen = false;
+      await Haptics.impact({ style: ImpactStyle.Light });
       await this.toastService.show('Perfil actualizado');
     } catch {
       await this.toastService.show('No se pudo actualizar el perfil');

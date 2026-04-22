@@ -1,17 +1,37 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Iniciar sesion</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="auth-shell login-shell">
+  <div class="auth-orb orb-one"></div>
+  <div class="auth-orb orb-two"></div>
 
-<ion-content class="ion-padding">
-  <form [formGroup]="form" (ngSubmit)="login()" class="form-grid">
-    <app-custom-input label="Email" [control]="form.controls.email" type="email" placeholder="correo@dominio.com"></app-custom-input>
-    <app-custom-input label="Contrasena" [control]="form.controls.password" type="password" placeholder="******"></app-custom-input>
+  <div class="auth-card">
+    <div class="auth-brand">
+      <span class="brand-mark">
+        <img class="brand-logo" src="assets/icon/app-logo.svg" alt="" aria-hidden="true" />
+      </span>
+      <div>
+        <p class="eyebrow">My Digital Wallet</p>
+        <h1>Bienvenido de nuevo</h1>
+      </div>
+    </div>
 
-    <ion-button type="submit" expand="block">Ingresar</ion-button>
-    <ion-button expand="block" fill="outline" (click)="loginWithBiometric()">Ingresar con biometria</ion-button>
-    <ion-button expand="block" color="danger" (click)="loginGoogle()">Ingresar con Google</ion-button>
-    <ion-button expand="block" fill="clear" routerLink="/register">Crear cuenta</ion-button>
-  </form>
+    <form [formGroup]="form" (ngSubmit)="login()" class="auth-form">
+      <app-custom-input label="Email" [control]="form.controls.email" type="email" placeholder="correo@dominio.com"></app-custom-input>
+      <app-custom-input label="Contrasena" [control]="form.controls.password" type="password" placeholder="******"></app-custom-input>
+
+      <ion-button type="submit" expand="block" class="primary-action">Ingresar</ion-button>
+
+      <div class="auth-secondary-actions">
+        <ion-button expand="block" fill="outline" class="secondary-action" (click)="loginWithBiometric()">
+          <ion-icon slot="start" name="finger-print-outline"></ion-icon>
+          Ingresar con biometria
+        </ion-button>
+
+        <ion-button expand="block" fill="outline" class="secondary-action google-action" (click)="loginGoogle()">
+          <ion-icon slot="start" name="logo-google"></ion-icon>
+          Ingresar con Google
+        </ion-button>
+      </div>
+
+      <ion-button expand="block" fill="clear" class="link-action" routerLink="/register">Crear cuenta</ion-button>
+    </form>
+  </div>
 </ion-content>

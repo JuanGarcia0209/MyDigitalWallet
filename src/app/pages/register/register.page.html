@@ -1,58 +1,74 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{ isGoogleCompletion ? 'Completar registro' : 'Registro' }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="auth-shell register-shell">
+  <div class="auth-orb orb-one"></div>
+  <div class="auth-orb orb-two"></div>
 
-<ion-content class="ion-padding">
-  <form class="form-grid" [formGroup]="form" (ngSubmit)="register()">
-    <app-custom-input label="Nombre" [control]="form.controls.firstName"></app-custom-input>
-    <app-custom-input label="Apellido" [control]="form.controls.lastName"></app-custom-input>
+  <div class="auth-card">
+    <div class="auth-brand">
+      <span class="brand-mark">
+        <img class="brand-logo" src="assets/icon/app-logo.svg" alt="" aria-hidden="true" />
+      </span>
+      <div>
+        <p class="eyebrow">My Digital Wallet</p>
+        <h1>{{ isGoogleCompletion ? 'Completa tu perfil' : 'Crear cuenta' }}</h1>
+      </div>
+    </div>
 
-    <ion-item [class.ion-invalid]="form.controls.documentType.invalid && (form.controls.documentType.dirty || form.controls.documentType.touched)">
-      <ion-select label="Tipo de documento" labelPlacement="stacked" formControlName="documentType">
-        <ion-select-option value="CC">CC</ion-select-option>
-        <ion-select-option value="CE">CE</ion-select-option>
-        <ion-select-option value="PAS">PAS</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-text color="danger" *ngIf="form.controls.documentType.invalid && (form.controls.documentType.dirty || form.controls.documentType.touched)">
-      <small>El tipo de documento es obligatorio.</small>
-    </ion-text>
+    <form class="auth-form" [formGroup]="form" (ngSubmit)="register()">
+      <div class="auth-section-title">Datos personales</div>
+      <app-custom-input label="Nombre" [control]="form.controls.firstName"></app-custom-input>
+      <app-custom-input label="Apellido" [control]="form.controls.lastName"></app-custom-input>
 
-    <app-custom-input label="Numero de documento" [control]="form.controls.documentNumber"></app-custom-input>
-    <ion-item [class.ion-invalid]="form.controls.country.invalid && (form.controls.country.dirty || form.controls.country.touched)">
-      <ion-select label="Pais" labelPlacement="stacked" formControlName="country">
-        <ion-select-option *ngFor="let country of countryOptions" [value]="country.value">
-          {{ country.label }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-text color="danger" *ngIf="form.controls.country.invalid && (form.controls.country.dirty || form.controls.country.touched)">
-      <small>El pais es obligatorio.</small>
-    </ion-text>
+      <div class="auth-section-title">Documento y ubicacion</div>
+      <ion-item class="select-field" [class.ion-invalid]="form.controls.documentType.invalid && (form.controls.documentType.dirty || form.controls.documentType.touched)">
+        <ion-select label="Tipo de documento" labelPlacement="stacked" formControlName="documentType">
+          <ion-select-option value="CC">CC</ion-select-option>
+          <ion-select-option value="CE">CE</ion-select-option>
+          <ion-select-option value="PAS">PAS</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-text color="danger" *ngIf="form.controls.documentType.invalid && (form.controls.documentType.dirty || form.controls.documentType.touched)">
+        <small>El tipo de documento es obligatorio.</small>
+      </ion-text>
 
-    <app-custom-input label="Email" [control]="form.controls.email" type="email"></app-custom-input>
-    <app-custom-input *ngIf="!isGoogleCompletion" label="Contrasena" [control]="form.controls.password" type="password"></app-custom-input>
-    <ion-text color="danger" *ngIf="form.controls.firstName.invalid && (form.controls.firstName.dirty || form.controls.firstName.touched)">
-      <small>Ingresa un nombre valido.</small>
-    </ion-text>
-    <ion-text color="danger" *ngIf="form.controls.lastName.invalid && (form.controls.lastName.dirty || form.controls.lastName.touched)">
-      <small>Ingresa un apellido valido.</small>
-    </ion-text>
-    <ion-text color="danger" *ngIf="form.controls.documentNumber.invalid && (form.controls.documentNumber.dirty || form.controls.documentNumber.touched)">
-      <small>El numero de documento debe contener solo digitos y tener entre 5 y 20 caracteres.</small>
-    </ion-text>
-    <ion-text color="danger" *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)">
-      <small>El email no es valido.</small>
-    </ion-text>
-    <ion-text color="danger" *ngIf="!isGoogleCompletion && form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)">
-      <small>La contrasena debe tener al menos 6 caracteres.</small>
-    </ion-text>
+      <app-custom-input label="Numero de documento" [control]="form.controls.documentNumber"></app-custom-input>
 
-    <ion-button type="submit" expand="block">{{ isGoogleCompletion ? 'Completar perfil' : 'Crear cuenta' }}</ion-button>
-    <ion-button expand="block" fill="clear" (click)="cancelRegistration()">
-      {{ isGoogleCompletion ? 'Cancelar proceso' : 'Ya tengo cuenta' }}
-    </ion-button>
-  </form>
+      <ion-item class="select-field" [class.ion-invalid]="form.controls.country.invalid && (form.controls.country.dirty || form.controls.country.touched)">
+        <ion-select label="Pais" labelPlacement="stacked" formControlName="country">
+          <ion-select-option *ngFor="let country of countryOptions" [value]="country.value">
+            {{ country.label }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-text color="danger" *ngIf="form.controls.country.invalid && (form.controls.country.dirty || form.controls.country.touched)">
+        <small>El pais es obligatorio.</small>
+      </ion-text>
+
+      <div class="auth-section-title">Acceso</div>
+      <app-custom-input label="Email" [control]="form.controls.email" type="email"></app-custom-input>
+      <app-custom-input *ngIf="!isGoogleCompletion" label="Contrasena" [control]="form.controls.password" type="password"></app-custom-input>
+
+      <div class="form-notes">
+        <ion-text color="danger" *ngIf="form.controls.firstName.invalid && (form.controls.firstName.dirty || form.controls.firstName.touched)">
+          <small>Ingresa un nombre valido.</small>
+        </ion-text>
+        <ion-text color="danger" *ngIf="form.controls.lastName.invalid && (form.controls.lastName.dirty || form.controls.lastName.touched)">
+          <small>Ingresa un apellido valido.</small>
+        </ion-text>
+        <ion-text color="danger" *ngIf="form.controls.documentNumber.invalid && (form.controls.documentNumber.dirty || form.controls.documentNumber.touched)">
+          <small>El numero de documento debe contener solo digitos y tener entre 5 y 20 caracteres.</small>
+        </ion-text>
+        <ion-text color="danger" *ngIf="form.controls.email.invalid && (form.controls.email.dirty || form.controls.email.touched)">
+          <small>El email no es valido.</small>
+        </ion-text>
+        <ion-text color="danger" *ngIf="!isGoogleCompletion && form.controls.password.invalid && (form.controls.password.dirty || form.controls.password.touched)">
+          <small>La contrasena debe tener al menos 6 caracteres.</small>
+        </ion-text>
+      </div>
+
+      <ion-button type="submit" expand="block" class="primary-action">{{ isGoogleCompletion ? 'Completar perfil' : 'Crear cuenta' }}</ion-button>
+      <ion-button expand="block" fill="clear" class="link-action" (click)="cancelRegistration()">
+        {{ isGoogleCompletion ? 'Cancelar proceso' : 'Ya tengo cuenta' }}
+      </ion-button>
+    </form>
+  </div>
 </ion-content>

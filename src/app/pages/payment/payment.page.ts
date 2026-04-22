@@ -1,11 +1,14 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { WalletCard, WalletTransaction } from 'src/app/core/models/app.models';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { BiometricService } from 'src/app/core/services/biometric.service';
 import { CardService } from 'src/app/core/services/card.service';
+import { LoadingService } from 'src/app/core/services/loading.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { PaymentService } from 'src/app/core/services/payment.service';
 import { ToastService } from 'src/app/core/services/toast.service';
@@ -42,12 +45,14 @@ export class PaymentPage implements OnInit {
     private readonly cardService: CardService,
     private readonly paymentService: PaymentService,
     private readonly biometricService: BiometricService,
+    private readonly loadingService: LoadingService,
     private readonly notificationService: NotificationService,
     private readonly userService: UserService,
     private readonly toastService: ToastService,
     private readonly alertController: AlertController,
     private readonly location: Location,
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
   ) {}
 
   goBack(): void {
@@ -143,6 +148,7 @@ export class PaymentPage implements OnInit {
         }
     }
 
+    await this.loadingService.show('Procesando pago...');
     try {
       await this.paymentService.processPayment(this.selectedCardId, this.merchant, this.amount);
       const notificationResult = await this.notificationService.sendPaymentNotification(this.amount);
@@ -153,8 +159,14 @@ export class PaymentPage implements OnInit {
       );
       this.regenerateSimulation();
       this.showSimulatorModal = false;
+      void this.router.navigate(['/payment'], {
+        queryParams: this.selectedCardId ? { cardId: this.selectedCardId } : {},
+        replaceUrl: true,
+      });
     } catch {
       await this.toastService.show('No se pudo procesar el pago');
+    } finally {
+      await this.loadingService.hide();
     }
   }
 
@@ -193,6 +205,11 @@ export class PaymentPage implements OnInit {
     this.showSimulatorModal = false;
   }
 
+  closeSimulatorAndGoHome(): void {
+    this.showSimulatorModal = false;
+    void this.router.navigateByUrl('/home', { replaceUrl: true });
+  }
+
   openEmojiPicker(tx: WalletTransaction): void {
     this.reactionTarget = tx;
 
@@ -222,7 +239,13 @@ export class PaymentPage implements OnInit {
       return;
     }
 
-    await this.paymentService.updateReaction(this.reactionTarget.id, emoji);
-    this.closeEmojiPicker();
+    await this.loadingService.show('Guardando reaccion...');
+    try {
+      await this.paymentService.updateReaction(this.reactionTarget.id, emoji);
+      await Haptics.impact({ style: ImpactStyle.Light });
+      this.closeEmojiPicker();
+    } finally {
+      await this.loadingService.hide();
+    }
   }
 }

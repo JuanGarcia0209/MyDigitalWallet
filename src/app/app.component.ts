@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +6,4 @@ import { SplashScreen } from '@capacitor/splash-screen';
   styleUrls: ['app.component.scss'],
   standalone: false,
 })
-export class AppComponent {
-  constructor() {
-    void SplashScreen.hide();
-  }
-}
+export class AppComponent {}

@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Subscription } from 'rxjs';
 import { CardService } from 'src/app/core/services/card.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
@@ -130,6 +131,7 @@ export class AddCardPage implements AfterViewInit, OnDestroy {
         cardNumber: raw.cardNumber || '',
         expiry: raw.expiry || '',
       });
+      await Haptics.impact({ style: ImpactStyle.Light });
       await this.toastService.show('Tarjeta agregada correctamente');
       await this.router.navigateByUrl('/home');
     } catch {

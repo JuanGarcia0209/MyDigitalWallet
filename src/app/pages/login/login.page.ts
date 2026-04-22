@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { BiometricService } from 'src/app/core/services/biometric.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
@@ -41,6 +42,7 @@ export class LoginPage {
     await this.loadingService.show('Iniciando sesion...');
     try {
       await this.authService.loginWithEmail(email, password);
+      await Haptics.impact({ style: ImpactStyle.Light });
       await this.router.navigateByUrl('/home', { replaceUrl: true });
     } catch (error) {
       await this.toastService.show(this.authService.getAuthErrorMessage(error));
@@ -73,6 +75,7 @@ export class LoginPage {
   }
 
   async loginGoogle(): Promise<void> {
+    await this.loadingService.show('Iniciando sesion con Google...');
     try {
       const result = await this.authService.loginWithGoogle();
       if (result.needsProfileCompletion) {
@@ -89,9 +92,12 @@ export class LoginPage {
       }
 
       await this.toastService.show('Sesion con Google iniciada');
+      await Haptics.impact({ style: ImpactStyle.Light });
       await this.router.navigateByUrl('/home', { replaceUrl: true });
     } catch (error) {
       await this.toastService.show(this.authService.getAuthErrorMessage(error));
+    } finally {
+      await this.loadingService.hide();
     }
   }
 }
